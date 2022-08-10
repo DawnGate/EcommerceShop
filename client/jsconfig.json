@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"outDir": "./dist/",
+		"sourceMap": true,
+		"module": "commonjs",
+		"checkJs": true,
+		"target": "es6",
+		"jsx": "react-jsx"
+	},
+	"include": ["./src/**/*"]
+}
+
