@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@material-ui/icons'
+import { useState } from 'react'
+import { sliderItems } from '../data'
 
 const Container = styled.div`
   width: 100%;
@@ -28,9 +30,12 @@ const Arrow = styled.div.attrs((props) => ({
   opacity: 0.5;
 `
 
-const Wrapper = styled.div`
+const Wrapper = styled.div.attrs((props)=> ({
+  slideIndex: props.slideIndex || 0 }))`
   height: 100%;
   display: flex;
+  transition: all 1.5s ease;
+  transform: translateX(${(props) => props.slideIndex * -100}vw);
 `
 
 const Slide = styled.div.attrs((props) => ({
@@ -74,55 +79,37 @@ const Button = styled.button`
 `
 
 const Slider = () => {
+  const [slideIndex, setSlideIndex] = useState(0)
+  const handleClick = (direction) => {
+    if(direction === "left"){
+      setSlideIndex(slideIndex > 0 ? slideIndex - 1: (sliderItems.length -1 ))
+    }else{
+      setSlideIndex(slideIndex < (sliderItems.length -1 ) ? slideIndex + 1: 0)
+    }
+  }
   return (
     <Container>
-      <Arrow direction="left">
+      <Arrow direction="left" onClick={() => handleClick('left')}>
         <ArrowLeftOutlined />
       </Arrow>
 
-      <Wrapper>
-        <Slide bg="f5fafd">
-          <ImgContainer>
-            <Image src="https://image.made-in-china.com/202f0j00HlwpujDFwJkZ/Hot-Selling-Online-Shopping-Summer-Holiday-Women-Tops.jpg" />
-          </ImgContainer>
+      <Wrapper slideIndex={slideIndex}>
+        {sliderItems.map((item) => (
+          <Slide bg={item.bg}>
+            <ImgContainer>
+              <Image src={item.img} />
+            </ImgContainer>
 
-          <InfoContainer>
-            <Title>SUMMER SALE</Title>
-            <Desc>
-              DON'T PROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.
-            </Desc>
-            <Button>SHOW NOW</Button>
-          </InfoContainer>
-        </Slide>
-        <Slide bg="fcf1ed">
-          <ImgContainer>
-            <Image src="https://image.made-in-china.com/202f0j00HlwpujDFwJkZ/Hot-Selling-Online-Shopping-Summer-Holiday-Women-Tops.jpg" />
-          </ImgContainer>
-
-          <InfoContainer bg="fbf0f4">
-            <Title>POPULAR SALE</Title>
-            <Desc>
-              DON'T PROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.
-            </Desc>
-            <Button>SHOW NOW</Button>
-          </InfoContainer>
-        </Slide>
-        <Slide>
-          <ImgContainer>
-            <Image src="https://image.made-in-china.com/202f0j00HlwpujDFwJkZ/Hot-Selling-Online-Shopping-Summer-Holiday-Women-Tops.jpg" />
-          </ImgContainer>
-
-          <InfoContainer>
-            <Title>WINTER SALE</Title>
-            <Desc>
-              DON'T PROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.
-            </Desc>
-            <Button>SHOW NOW</Button>
-          </InfoContainer>
-        </Slide>
+            <InfoContainer>
+              <Title>{item.title}</Title>
+              <Desc>{item.desc}</Desc>
+              <Button>SHOW NOW</Button>
+            </InfoContainer>
+          </Slide>
+        ))}
       </Wrapper>
 
-      <Arrow direction="right">
+      <Arrow direction="right" onClick={() => handleClick('left')}>
         <ArrowRightOutlined />
       </Arrow>
     </Container>
