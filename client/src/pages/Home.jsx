@@ -4,6 +4,7 @@ import Announcement from '../components/Announcement.jsx'
 import Slider from '../components/Slider.jsx'
 import Category from '../components/Catergories'
 import Products from '../components/Products'
+import Newsletter from '../components/Newsletter'
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
       <Slider />
       <Category />
       <Products />
+      <Newsletter />
     </div>
   )
 }
