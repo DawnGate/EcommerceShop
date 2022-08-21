@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@material-ui/icons'
 import { useState } from 'react'
 import { sliderItems } from '../data'
+import { mobile } from '../responsive.js'
 
 const Container = styled.div`
   width: 100%;
@@ -9,6 +10,7 @@ const Container = styled.div`
   display: flex;
   position: relative;
   overflow: hidden;
+  ${mobile({ display: 'none' })}
 `
 
 const Arrow = styled.div.attrs((props) => ({
@@ -28,10 +30,12 @@ const Arrow = styled.div.attrs((props) => ({
   right: ${(props) => props.direction === 'right' && '10px'};
   margin: auto;
   opacity: 0.5;
+  z-index: 2;
 `
 
-const Wrapper = styled.div.attrs((props)=> ({
-  slideIndex: props.slideIndex || 0 }))`
+const Wrapper = styled.div.attrs((props) => ({
+  slideIndex: props.slideIndex || 0
+}))`
   height: 100%;
   display: flex;
   transition: all 1.5s ease;
@@ -81,10 +85,10 @@ const Button = styled.button`
 const Slider = () => {
   const [slideIndex, setSlideIndex] = useState(0)
   const handleClick = (direction) => {
-    if(direction === "left"){
-      setSlideIndex(slideIndex > 0 ? slideIndex - 1: (sliderItems.length -1 ))
-    }else{
-      setSlideIndex(slideIndex < (sliderItems.length -1 ) ? slideIndex + 1: 0)
+    if (direction === 'left') {
+      setSlideIndex(slideIndex > 0 ? slideIndex - 1 : sliderItems.length - 1)
+    } else {
+      setSlideIndex(slideIndex < sliderItems.length - 1 ? slideIndex + 1 : 0)
     }
   }
   return (
@@ -109,7 +113,7 @@ const Slider = () => {
         ))}
       </Wrapper>
 
-      <Arrow direction="right" onClick={() => handleClick('left')}>
+      <Arrow direction="right" onClick={() => handleClick('right')}>
         <ArrowRightOutlined />
       </Arrow>
     </Container>
